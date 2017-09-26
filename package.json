@@ -20,9 +20,12 @@
     "chai-as-promised": "^7.1.1",
     "express": "^4.15.5",
     "google-auth-library": "^0.11.0",
+    "google-spreadsheet": "^2.0.4",
     "googleapis": "^22.2.0",
     "lodash": "^4.17.4",
     "mocha": "^3.5.3",
+    "moment": "^2.18.1",
+    "moment-duration": "0.0.6",
     "request-promise": "^4.2.2",
     "sinon": "^4.0.0"
   }
