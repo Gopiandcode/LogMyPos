@@ -1,0 +1,28 @@
+{
+  "name": "logmypos",
+  "version": "0.0.1",
+  "description": "A webapplication to log track departures from accomadation and respond accordingly",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "."
+  },
+  "keywords": [
+    "logmypos"
+  ],
+  "author": "Gopiandcode (Kiran Gopinathan)",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "express": "^4.15.5",
+    "googleapis": "^22.2.0",
+    "lodash": "^4.17.4",
+    "mocha": "^3.5.3",
+    "request-promise": "^4.2.2",
+    "sinon": "^4.0.0"
+  }
+}
