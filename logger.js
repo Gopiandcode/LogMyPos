@@ -1,5 +1,4 @@
-'use strict';
+'use-strict';
 
-function logger() {}
-
-module.exports = logger;
+const account_info = require('./auth/client_secret');
+const GoogleSpreadsheet = require('google-spreadsheet';
