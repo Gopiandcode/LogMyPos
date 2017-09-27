@@ -12,20 +12,34 @@ const lambda = require('./alexa');
 
 const app = express();
 const port = process.env.PORT || config.local_port;
+const fs = require('fs');
 
-app.use(session({secret: 'LogmyposSecret'}));
-app.use(bodyParser.json({type: 'application/json'}));
+const sslOptions = {
+	key: fs.readFileSync('./auth/ssl/private-key.pem'),
+	cert: fs.readFileSync('./auth/ssl/certificate.pem')
+};
+
+app.use(session({secret: 'LogmyposSecret', cookie:{}}));
+app.use('/alexa', bodyParser.json({type: 'application/json'}));
+app.use('/sms', bodyParser.urlencoded({type: 'application/x-www-form-urlencoded'}));
+app.use(function (req,res,next) {
+	console.log(JSON.stringify(req.body));
+	console.log(req);
+	next();
+});
 
 
 app.post('/sms', function(req, res) {
+    console.log("Twillo message retrieved");
     if(req.body && req.body.Body) {
         let resp = messenger.respondData(req.body.Body);
-        let twiml = new twilio.TwimlResponse();
+	console.log(resp);
+        let twiml = new twilio.twiml.MessagingResponse();
         twiml.message(resp);
         res.writeHead(200, {'Content-Type': 'text/xml'});
         res.end(twiml.toString());
     } else {
-        res.send(403);
+        res.send(401);
     }
 });
 
@@ -42,14 +56,17 @@ app.post('/alexa', function(req,res) {
 
 });
 
+app.get('/heart', function(req,res) {
+	res.send('hello world');
+});
+
 
 
 if(config.build_locally) {
-    const http = require('http');
-    http.createServer(app).listen(config.local_port, function() {
+    const https = require('https');
+    https.createServer(sslOptions, app).listen(config.local_port, function() {
         console.log("Express server listening on port " + config.local_port);
     });
-
 } else {
     module.exports = app;
 }

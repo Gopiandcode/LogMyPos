@@ -2,6 +2,7 @@ const Alexa = require('alexa-sdk');
 const moment = require('moment');
 const tracker = require('./tracker');
 const logger  = require('./logger');
+const Sherlock = require('sherlockjs');
 
 module.exports.handler = function (event, context) {
     let alexa = Alexa.handler(event, context);
@@ -34,14 +35,20 @@ module.exports.handler = function (event, context) {
                     "sessionAttributes": this.attributes
                 });
             } else {
-                let expected_time_string = this.event.request.intent.slots.TIME;
-                let expected_time; 
-                try {
-                    expected_time = new moment(expected_time_string);
-                } catch (err) {
-                    console.log(err);
-                    expected_time = null;
-                }
+		console.log(JSON.stringify(this.event.request.intent.slots.TIME, null, 3));
+                let expected_time_string = this.event.request.intent.slots.TIME.value;
+		console.log("expected_time_string: " + expected_time_string + "\n");
+                let expected_time = null; 
+		let parsed = Sherlock.parse(expected_time_string);
+		expected_time = parsed.startDate;
+		if(expected_time !== null) {
+			try {
+				expected_time = new moment(expected_time);
+			} catch(err) {
+				console.log(err);
+				expected_time = null;
+			}
+		}
                 if(expected_time === null) {
                     this.emit(':tell', "LogMyPos was unable to log your leaving time.");
                 } else {
@@ -50,9 +57,9 @@ module.exports.handler = function (event, context) {
                 }
             }
         },
-        'SubmitIntent': function () {
-            let morningRunTime_string = this.event.request.intent.slots.MORNINGRUNTIME;
-            let eveningRunTime_string = this.event.request.intent.slots.EVENINGRUNTIME;
+        'SubmitRunIntent': function () {
+            let morningRunTime_string = this.event.request.intent.slots.MORNINGRUNTIME.value;
+            let eveningRunTime_string = this.event.request.intent.slots.EVENINGRUNTIME.value;
             let morningRunTime = null;
             let eveningRunTime = null;
             let err_count = 0;
@@ -69,7 +76,7 @@ module.exports.handler = function (event, context) {
                 console.log(err);
             }
 
-            if(err_cout < 2) {
+            if(err_count < 2) {
                 logger.storeRunningData(morningRunTime, eveningRunTime);
                 let str = "";
                 if(morningRunTime !== null) {
