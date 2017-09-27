@@ -1,12 +1,20 @@
+const createHandler = require('azure-function-express').createHandler;
+const context = require('aws-lambda-mock-context');
 const express = require('express');
-const twilio = require('./twilio');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const twilio = require('twilio');
 
 const config = require('./auth/config');
 const messenger = require('./messenger');
 const logger = require('./logger');
+const lambda = require('./alexa');
 
 const app = express();
+const port = process.env.PORT || config.local_port;
 
+app.use(session({secret: 'LogmyposSecret'}));
+app.use(bodyParser.json({type: 'application/json'}));
 
 
 app.post('/sms', function(req, res) {
@@ -21,6 +29,19 @@ app.post('/sms', function(req, res) {
     }
 });
 
+app.post('/alexa', function(req,res) {
+    let ctx = context();
+
+    lambda.handler(req.body, ctx);
+
+    ctx.Promise.then((resp) => {
+        return res.status(200).json(resp);
+    }).catch((err) => {
+        console.log(err);
+    });
+
+});
+
 
 
 if(config.build_locally) {
@@ -30,7 +51,5 @@ if(config.build_locally) {
     });
 
 } else {
-    module.exports = {
-        app: app
-    };
+    module.exports = app;
 }

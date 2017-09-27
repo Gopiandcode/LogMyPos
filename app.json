@@ -1,0 +1,8 @@
+{
+  "name": "LogMyPos",
+  "description": "A sweet Alexa-integrated application to collect my position data.",
+  "repository": "https://github.com/Gopiandcode/LogMyPos.git",
+  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+  "keywords": ["node", "express", "heroku"],
+  "image": "heroku/nodejs"
+}
