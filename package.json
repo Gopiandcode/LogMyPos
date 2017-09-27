@@ -2,9 +2,13 @@
   "name": "logmypos",
   "version": "0.0.1",
   "description": "A webapplication to log track departures from accomadation and respond accordingly",
+  "engines": {
+    "node": "6.11.1"
+  },
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "index"
   },
   "repository": {
     "type": "git",
@@ -16,9 +20,14 @@
   "author": "Gopiandcode (Kiran Gopinathan)",
   "license": "MIT",
   "dependencies": {
+    "alexa-sdk": "^1.0.14",
+    "aws-lambda-mock-context": "^3.1.1",
+    "azure-function-express": "^1.2.2",
+    "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "express": "^4.15.5",
+    "express-session": "^1.15.6",
     "google-auth-library": "^0.11.0",
     "google-spreadsheet": "^2.0.4",
     "googleapis": "^22.2.0",
@@ -26,6 +35,7 @@
     "mocha": "^3.5.3",
     "moment": "^2.18.1",
     "moment-duration": "0.0.6",
+    "node-cron": "^1.2.1",
     "request-promise": "^4.2.2",
     "sherlockjs": "^1.3.7",
     "sinon": "^4.0.0",
