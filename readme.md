@@ -1,5 +1,5 @@
 # LogMyPos
-## Voice integrated - Location Failsafe and logging tool
+## Voice integrated location failsafe and logging tool
 
 So I don't really have regular contact with any relatives or family members, which means that in a worst case scenario, if 
 something were to happen to me while I was out and about, it would be at least a few weeks before anyone could respond.
