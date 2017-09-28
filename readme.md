@@ -10,13 +10,19 @@ system to keep track of where I am.
 The system works as follows:
 
 When I leave my accommodation, I state
-                         "Alexa, tell log my position, I'm leaving."
+
+                                "Alexa, tell log my position, I'm leaving."
+
 at which point Alexa responds with
-                         "and what time will you be back?"
+
+                                "and what time will you be back?"
+
 to which I can simply state what time I would expect to be back.
 
 When I return home, I can simply say
-                          "Alexa, tell log my position, I'm back"
+
+                                "Alexa, tell log my position, I'm back"
+
 at which point my time of departure and return are logged into a Google spreadsheet for future use.
 
 If I fail to return home by the expected time, the system will use the Twillio api to send me a warning text message, informing me of my delay.
